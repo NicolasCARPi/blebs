@@ -6,7 +6,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # config
+# the input file with all the tracks
 EXCEL_FILE = 'tracks.xlsx'
+# mininum number of timepoints a track must have to be plotted
+MIN_TIMEPOINTS = 40
+# maximum number of tracks to plot
+MAX_TRACKS = 9999999999999999
 # end config
 
 print("Reading file")
@@ -21,17 +26,22 @@ dfg = df.groupby(['id'])
 groups = dict(list(dfg))
 print("Found {} tracks".format(len(groups)))
 
-i = 0
+i = 1
+plotted = 0
+
 # plot all on same figure
 fig, ax = plt.subplots(1, 1)
 for k in groups.keys():
-    groups[k].plot('x', 'y', ax=ax, legend=False)
+    # only plot big tracks
+    if len(groups[k]) > MIN_TIMEPOINTS:
+        groups[k].plot('x', 'y', ax=ax, legend=False)
+        plotted += 1
+
     i += 1
     if (i % 100 == 0):
         print("Processed {} tracks".format(i))
-    #if (i) > 4000:
-    #    print("Stopping")
-    #    break
-
+    if (plotted) > MAX_TRACKS:
+        print("Reached maximum number of tracks to plot ({})".format(MAX_TRACKS))
+        break
 
 plt.show()
