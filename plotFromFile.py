@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 #INPUT_FILE = 'tracks.xlsx'
 #INPUT_FILE = 'dmso-flat-pos1.csv'
 # mininum number of timepoints a track must have to be plotted
-MIN_TIMEPOINTS = 0
+MIN_TIMEPOINTS = 30
 # maximum number of tracks to plot
 MAX_TRACKS = 9999999999999999
 # end config
